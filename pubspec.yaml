@@ -32,7 +32,6 @@ dependencies:
   responsive_builder: ^0.2.0+2
   responsive_widgets: ^2.0.1
   fluro: ^1.6.3
-  get_it:
 
 dev_dependencies:
   flutter_test:

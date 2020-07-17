@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:html' as html;
 
+const String WorkRoute = '/work';
+const String AboutRoute = '/about';
+
 class RoundedProfilePicture extends StatelessWidget {
   const RoundedProfilePicture({@required this.imageUrl})
       : assert(imageUrl != null);
@@ -33,7 +36,7 @@ class CustomAppBarItem extends StatelessWidget {
   final String itemText;
   final Function onTap;
   final GlobalKey<NavigatorState> navigatorKey;
-  final Widget rootPage;
+  final String rootPage;
 
   @override
   Widget build(BuildContext context) => InkWell(

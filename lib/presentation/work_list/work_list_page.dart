@@ -14,7 +14,6 @@ class _ArticleList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final articles = <int>[];
-
     for (var i = 0; i < 100; i++) {
       articles.add(i);
     }
@@ -45,8 +44,9 @@ class _ArticleCard extends StatelessWidget {
         elevation: 2,
         child: InkWell(
           onTap: () {
-            js.context.callMethod(
-                "open", ["https://stackoverflow.com/questions/ask"]);
+//            js.context.callMethod(
+//                "open", ["https://stackoverflow.com/questions/ask"]);
+          Navigator.pushNamed(context, 'work/hey');
           },
           child: Container(
             height: 150,
