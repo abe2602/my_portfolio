@@ -36,7 +36,7 @@ class CustomAppBarItem extends StatelessWidget {
   final String itemText;
   final Function onTap;
   final GlobalKey<NavigatorState> navigatorKey;
-  final String rootPage;
+  final Widget rootPage;
 
   @override
   Widget build(BuildContext context) => InkWell(
@@ -69,13 +69,15 @@ class _TranslateOnHoverState extends State<TranslateOnHover> {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (e) => _mouseEnter(true),
-      onExit: (e) => _mouseEnter(false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        child: widget.child,
-        transform: _hovering ? hoverTransform : nonHoverTransform,
+    return Container(
+      child: MouseRegion(
+        onEnter: (e) => _mouseEnter(true),
+        onExit: (e) => _mouseEnter(false),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          child: widget.child,
+          transform: _hovering ? hoverTransform : nonHoverTransform,
+        ),
       ),
     );
   }

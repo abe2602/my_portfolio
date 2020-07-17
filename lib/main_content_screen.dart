@@ -1,12 +1,11 @@
-import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:portfolio_v2/presentation/contact/contact_page.dart';
 import 'package:portfolio_v2/view_utils.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import 'presentation/about/about_page.dart';
 import 'presentation/work_list/work_list_page.dart';
-import 'dart:html' as html;
 
 class MainContentScreen extends StatefulWidget {
   @override
@@ -29,7 +28,7 @@ class MainContentScreenState extends State<MainContentScreen> {
           });
         },
         navigatorKey: GlobalKey<NavigatorState>(),
-        rootPage: 'about',
+        rootPage: AboutPage(),
       ),
       CustomAppBarItem(
         itemText: 'Work',
@@ -39,8 +38,18 @@ class MainContentScreenState extends State<MainContentScreen> {
           });
         },
         navigatorKey: GlobalKey<NavigatorState>(),
-        rootPage: 'work',
-      )
+        rootPage: WorkListPage(),
+      ),
+      CustomAppBarItem(
+        itemText: 'Contact',
+        onTap: () {
+          setState(() {
+            _currentBarIndex = 2;
+          });
+        },
+        navigatorKey: GlobalKey<NavigatorState>(),
+        rootPage: ContactPage(),
+      ),
     ];
   }
 
@@ -52,7 +61,7 @@ class MainContentScreenState extends State<MainContentScreen> {
               .currentState
               .maybePop(),
           child: Scaffold(
-            appBar: CustomAppBar(
+            appBar: _CustomAppBar(
               height: 70,
               list: _appFlows,
             ),
@@ -60,28 +69,56 @@ class MainContentScreenState extends State<MainContentScreen> {
               index: _currentBarIndex,
               children: _appFlows
                   .map(
-                    _buildIndexedPageFlow,
+                    (appFlow) => _PageFlow(
+                      appFlow: appFlow,
+                    ),
                   )
                   .toList(),
             ),
           ),
         ),
-        mobile: Scaffold(
-          body: AboutPage(),
+        mobile: WillPopScope(
+          onWillPop: () async => !await _appFlows[_currentBarIndex]
+              .navigatorKey
+              .currentState
+              .maybePop(),
+          child: Scaffold(
+            appBar: _CustomAppBar(
+              height: 70,
+              list: _appFlows,
+            ),
+            body: IndexedStack(
+              index: _currentBarIndex,
+              children: _appFlows
+                  .map(
+                    (appFlow) => _PageFlow(
+                      appFlow: appFlow,
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
         ),
       );
 }
 
-Widget _buildIndexedPageFlow(CustomAppBarItem appFlow) {
-  return Navigator(
-    key: appFlow.navigatorKey,
-    initialRoute: appFlow.rootPage,
-    onGenerateRoute: Router.appRouter.generator,
-  );
+class _PageFlow extends StatelessWidget {
+  const _PageFlow({@required this.appFlow}) : assert(appFlow != null);
+
+  final CustomAppBarItem appFlow;
+
+  @override
+  Widget build(BuildContext context) => Navigator(
+        key: appFlow.navigatorKey,
+        onGenerateRoute: (settings) => MaterialPageRoute(
+          settings: settings,
+          builder: (context) => appFlow.rootPage,
+        ),
+      );
 }
 
-class CustomAppBar extends PreferredSize {
-  const CustomAppBar({this.height = kToolbarHeight, this.list})
+class _CustomAppBar extends PreferredSize {
+  const _CustomAppBar({this.height = kToolbarHeight, this.list})
       : assert(list != null);
 
   final double height;
@@ -98,13 +135,14 @@ class CustomAppBar extends PreferredSize {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          InitialsWithDot(),
+          _InitialsWithDot(),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
             children: [
               list[0],
               list[1],
+              list[2],
             ],
           ),
         ],
@@ -113,7 +151,7 @@ class CustomAppBar extends PreferredSize {
   }
 }
 
-class InitialsWithDot extends StatelessWidget {
+class _InitialsWithDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(

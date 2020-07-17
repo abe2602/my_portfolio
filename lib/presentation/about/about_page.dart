@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portfolio_v2/view_utils.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'dart:html' as html;
 
 class AboutPage extends StatelessWidget {
   @override
@@ -19,15 +18,6 @@ class AboutPageSmallScreen extends StatefulWidget {
 }
 
 class AboutPageSmallScreenState extends State<AboutPageSmallScreen> {
-  @override
-  void initState() {
-    super.initState();
-
-    setState(() {
-      html.window.history.pushState(null, "Home", "/hou");
-    });
-  }
-
   @override
   Widget build(BuildContext context) =>
       Container(

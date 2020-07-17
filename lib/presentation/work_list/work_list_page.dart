@@ -19,7 +19,7 @@ class _ArticleList extends StatelessWidget {
     }
 
     return Container(
-      color: Colors.white70,
+      color: const Color(0xFFF5F5F5),
       child: ListView.builder(
         itemCount: articles.length,
         itemBuilder: (context, index) => _ArticleCard(
@@ -40,13 +40,12 @@ class _ArticleCard extends StatelessWidget {
     const imageUrl = 'images/poster.jpg';
     return InkWell(
       child: Card(
-        color: const Color(0xFFF5F5F5),
+        color: Colors.white70,
         elevation: 2,
         child: InkWell(
           onTap: () {
-//            js.context.callMethod(
-//                "open", ["https://stackoverflow.com/questions/ask"]);
-          Navigator.pushNamed(context, 'work/hey');
+            js.context.callMethod(
+                "open", ["https://stackoverflow.com/questions/ask"]);
           },
           child: Container(
             height: 150,
