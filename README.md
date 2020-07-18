@@ -1,16 +1,19 @@
-# portfolio_v2
+# My Portfolio Website
+This repository contains my Website implementation, I'm using Flutter Web (it's not stable yet), 
+so bugs may occur. I tryed to make it as responsible as I could, but if you find any bugs, please
+contact me!
 
-A new Flutter project.
+## The website!
+![alt text](https://i.imgur.com/HWVFWME.png)
 
-## Getting Started
+In this project, I'm using Provider do Dependency Injection, and a custom app bar (which doesn't lose it's state).
+To acquire this behavior, there's one Navigator to each tab, so when it changes, there's no loss on state.
 
-This project is a starting point for a Flutter application.
+## Flutter
+- [Flutter](https://github.com/flutter/flutter)
 
-A few resources to get you started if this is your first Flutter project:
+## Autor
+Bruno Abe
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
