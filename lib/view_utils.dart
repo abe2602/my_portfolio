@@ -4,6 +4,13 @@ import 'dart:html' as html;
 const String WorkRoute = '/work';
 const String AboutRoute = '/about';
 
+class LoadingIndicator extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => const Center(
+    child: CircularProgressIndicator(),
+  );
+}
+
 class RoundedProfilePicture extends StatelessWidget {
   const RoundedProfilePicture({@required this.imageUrl})
       : assert(imageUrl != null);

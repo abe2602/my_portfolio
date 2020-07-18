@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:portfolio_v2/presentation/contact/contact_page.dart';
 import 'package:portfolio_v2/view_utils.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
@@ -19,7 +18,13 @@ class MainContentScreenState extends State<MainContentScreen> {
   @override
   void initState() {
     super.initState();
-    _appFlows = [
+
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _appFlows ??= [
       CustomAppBarItem(
         itemText: 'About',
         onTap: () {
@@ -38,17 +43,7 @@ class MainContentScreenState extends State<MainContentScreen> {
           });
         },
         navigatorKey: GlobalKey<NavigatorState>(),
-        rootPage: WorkListPage(),
-      ),
-      CustomAppBarItem(
-        itemText: 'Contact',
-        onTap: () {
-          setState(() {
-            _currentBarIndex = 2;
-          });
-        },
-        navigatorKey: GlobalKey<NavigatorState>(),
-        rootPage: ContactPage(),
+        rootPage: WorkListPage.create(context),
       ),
     ];
   }
@@ -142,7 +137,6 @@ class _CustomAppBar extends PreferredSize {
             children: [
               list[0],
               list[1],
-              list[2],
             ],
           ),
         ],

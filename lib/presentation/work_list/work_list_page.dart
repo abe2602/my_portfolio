@@ -1,27 +1,48 @@
 import 'dart:js' as js;
 
 import 'package:flutter/material.dart';
+import 'package:portfolio_v2/async_snapshot_response_view.dart';
+import 'package:portfolio_v2/data/work_repository.dart';
+import 'package:portfolio_v2/presentation/work_list/work_list_bloc.dart';
+import 'package:portfolio_v2/presentation/work_list/work_list_models.dart';
+import 'package:provider/provider.dart';
 
 class WorkListPage extends StatelessWidget {
-  const WorkListPage({Key key}) : super(key: key);
+  const WorkListPage({@required this.bloc, Key key}) : super(key: key);
+  final WorkListBloc bloc;
+
+  static Widget create(BuildContext context) =>
+      ProxyProvider<WorkRepository, WorkListBloc>(
+        update: (context, repository, _) => WorkListBloc(
+          repository: repository,
+        ),
+        child: Consumer<WorkListBloc>(
+          builder: (context, bloc, _) => WorkListPage(
+            bloc: bloc,
+          ),
+        ),
+      );
 
   @override
-  Widget build(BuildContext context) => _ArticleList();
-
+  Widget build(BuildContext context) => StreamBuilder(
+    stream: bloc.onNewState,
+    builder: (context, snapshot) => AsyncSnapshotResponseView<Loading, Error, Success>(
+      snapshot: snapshot,
+      successWidgetBuilder: (successState) => _ArticleList(workList: successState.workList,),
+      errorWidgetBuilder: (errorState) => Text(errorState.toString()),
+    ),
+  );
 }
 
 class _ArticleList extends StatelessWidget {
+  const _ArticleList({@required this.workList}) : assert(workList != null);
+  final workList;
   @override
   Widget build(BuildContext context) {
-    final articles = <int>[];
-    for (var i = 0; i < 100; i++) {
-      articles.add(i);
-    }
-
     return Container(
       color: const Color(0xFFF5F5F5),
       child: ListView.builder(
-        itemCount: articles.length,
+        itemCount: workList.length,
         itemBuilder: (context, index) => _ArticleCard(
           index: index,
         ),

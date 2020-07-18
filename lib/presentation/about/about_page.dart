@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portfolio_v2/view_utils.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'dart:js' as js;
 
 class AboutPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) =>
-      ScreenTypeLayout(
+  Widget build(BuildContext context) => ScreenTypeLayout(
         tablet: AboutPageLargeScreen(),
         mobile: AboutPageSmallScreen(),
       );
@@ -19,8 +19,7 @@ class AboutPageSmallScreen extends StatefulWidget {
 
 class AboutPageSmallScreenState extends State<AboutPageSmallScreen> {
   @override
-  Widget build(BuildContext context) =>
-      Container(
+  Widget build(BuildContext context) => Container(
         color: const Color(0xFFF5F5F5),
         child: Center(
           child: SingleChildScrollView(
@@ -39,7 +38,7 @@ class AboutPageSmallScreenState extends State<AboutPageSmallScreen> {
                       height: 20,
                       width: 40,
                     ),
-                    ProfileInformation(),
+                    _ProfileInformation(),
                   ],
                 ),
               ),
@@ -51,8 +50,7 @@ class AboutPageSmallScreenState extends State<AboutPageSmallScreen> {
 
 class AboutPageLargeScreen extends StatelessWidget {
   @override
-  Widget build(BuildContext context) =>
-      Container(
+  Widget build(BuildContext context) => Container(
         color: const Color(0xFFF5F5F5),
         child: Center(
           child: SingleChildScrollView(
@@ -70,7 +68,7 @@ class AboutPageLargeScreen extends StatelessWidget {
                       height: 20,
                       width: 40,
                     ),
-                    ProfileInformation(),
+                    _ProfileInformation(),
                   ],
                 ),
               ),
@@ -80,10 +78,9 @@ class AboutPageLargeScreen extends StatelessWidget {
       );
 }
 
-class ProfileInformation extends StatelessWidget {
+class _ProfileInformation extends StatelessWidget {
   @override
-  Widget build(BuildContext context) =>
-      Column(
+  Widget build(BuildContext context) => Column(
         children: [
           SizedBox(
             height: 20,
@@ -99,10 +96,7 @@ class ProfileInformation extends StatelessWidget {
           ),
           Text(
             'Android. Flutter. Movies. Comics.\nInto nerd stuff!',
-            style: Theme
-                .of(context)
-                .textTheme
-                .caption,
+            style: Theme.of(context).textTheme.caption,
             textScaleFactor: 1.9,
             textAlign: TextAlign.center,
           ),
@@ -113,31 +107,42 @@ class ProfileInformation extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              SocialMediaItem(
+              _SocialMediaItem(
                 icon: FontAwesomeIcons.github,
-                onTap: () {},
+                onTap: () {
+                  js.context.callMethod(
+                      "open", ["https://github.com/abe2602"]);
+                },
               ),
-              SocialMediaItem(
+              _SocialMediaItem(
                 icon: FontAwesomeIcons.medium,
-                onTap: () {},
+                onTap: () {
+                  js.context.callMethod(
+                      "open", ["https://medium.com/@abe2602"]);
+                },
               ),
-              SocialMediaItem(icon: FontAwesomeIcons.linkedin, onTap: () {}),
+              _SocialMediaItem(
+                icon: FontAwesomeIcons.linkedin,
+                onTap: () {
+                  js.context.callMethod(
+                      "open", ["https://www.linkedin.com/in/abe2602/"]);
+                },
+              ),
             ],
           ),
         ],
       );
 }
 
-class SocialMediaItem extends StatelessWidget {
-  const SocialMediaItem({@required this.icon, @required this.onTap})
+class _SocialMediaItem extends StatelessWidget {
+  const _SocialMediaItem({@required this.icon, @required this.onTap})
       : assert(icon != null),
         assert(onTap != null);
   final IconData icon;
   final Function onTap;
 
   @override
-  Widget build(BuildContext context) =>
-      InkWell(
+  Widget build(BuildContext context) => InkWell(
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -145,4 +150,3 @@ class SocialMediaItem extends StatelessWidget {
         ),
       );
 }
-
